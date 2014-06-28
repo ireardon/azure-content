@@ -26,7 +26,7 @@ Azure SQL Database provides a relational database management system for Azure, a
 
 ##What is the Microsoft Driver for Node.JS for SQL Server
 
-The Microsoft Driver for Node.JS for SQL Server allows developers to access data stored in Microsoft SQL Server or Azure SQL Database from a Node.js application. The driver is currently a preview release only; additional features will be integrated into the project as they are completed. For more information on the driver, see the Microsoft Driver for Node.JS for SQL Server project's [Github page] and the associated [Wiki].
+The Microsoft Driver for Node.JS for SQL Server (msnodesql) allows developers to access data stored in Microsoft SQL Server or Azure SQL Database from a Node.js application. The driver is currently a preview release only; additional features will be integrated into the project as they are completed. For more information on the driver, see the Microsoft Driver for Node.JS for SQL Server project's [Github page] and the associated [Wiki].
 
 <div class="dev-callout">
 <b>Note</b>
@@ -47,6 +47,11 @@ The Microsoft SQL Server Driver for Node.js relies on the SQL Server Native Clie
 ###Install Node.js
 
 Node.js can be installed from [http://nodejs.org/#download](http://nodejs.org/#download). If an installation package is not available for your operating system, you can build Node.js from source.
+
+<div class="dev-callout">
+<b>Note</b>
+<p>If you intend to build the Microsoft Driver for Node.JS for SQL Server from source, you will need to install a 32-bit version of Node.js. This is because Azure only supports the 32-bit version of msnodesql.</p>
+</div>
 
 <h2><a id="CreateServer"></a>How to: Create a SQL Database</h2>
 
@@ -87,9 +92,9 @@ In the ODBC section of the resulting window, make note of the values for connect
 
 <h2><a id="Connect"></a>How to: Connect to a SQL Database instance</h2>
 
-###Install node-sqlserver
+###Install msnodesql
 
-The Microsoft Driver for Node.JS for SQL Server is available as the node-sqlserver native module. A binary version of this module is available from the [download center]. To use the binary version, perform these steps:
+The Microsoft Driver for Node.JS for SQL Server is available as the msnodesql native module. A binary version of this module is available from the [download center]. To use the binary version, perform these steps:
 
 1. Extract the binary archive to the **node\_modules** directory for your application.
 2. Run the **node-sqlserver-install.cmd** file extracted from the archive. This will create a **node-sqlserver** subdirectory under **node\_modules** and move the driver files into this new directory structure.
@@ -99,14 +104,14 @@ The Microsoft Driver for Node.JS for SQL Server is available as the node-sqlserv
 
 <div class="dev-callout">
 <b>Note</b>
-<p>You can also install the node-sqlserver module using the npm utility; however this will invoke node-gyp to build a binary version of the module on your system.</p>
+<p>You can also install the msnodesql module using the npm utility; however this will invoke node-gyp to build a binary version of the module on your system.</p>
 </div>
 
 ###Specify the connection string
 
-To use the node-sqlserver, you must require it in your application and specify a connection string. The connection string should be the ODBC value returned in the [How to: Get SQL Database connection information](#ConnectionInfo) section of this article. The code should appear similar to the following:
+To use the msnodesql, you must require it in your application and specify a connection string. The connection string should be the ODBC value returned in the [How to: Get SQL Database connection information](#ConnectionInfo) section of this article. The code should appear similar to the following:
 
-    var sql = require('node-sqlserver');
+    var sql = require('msnodesql');
 	var conn_str = "Driver={SQL Server Native Client 10.0};Server=tcp:{dbservername}.database.windows.net,1433;Database={database};Uid={username};Pwd={password};Encrypt=yes;Connection Timeout=30;";
 
 ###Query the database
@@ -144,17 +149,17 @@ While the above example illustrates how to return all rows at once in the result
 
 <div class="dev-callout">
 <b>Note</b>
-<p>The following information is based off of a preview release of the Microsoft Driver for Node.JS for SQL Server. The information in this section may not be the most recent information on using the node-sqlserver module with Azure. For the most recent information on the <a href="https://github.com/WindowsAzure/node-sqlserver">Microsoft Driver for Node.JS for SQL Server project page</a> on Github.</p>
+<p>The following information is based off of a preview release of the Microsoft Driver for Node.JS for SQL Server. The information in this section may not be the most recent information on using the msnodesql module with Azure. For the most recent information on the <a href="https://github.com/WindowsAzure/node-sqlserver">Microsoft Driver for Node.JS for SQL Server project page</a> on Github.</p>
 </div>
 
-Azure will not dynamically install the node-sqlserver module at runtime, so you must ensure that your application deployment includes a binary version of the module. You can verify that your deployment does contain a binary version of the module by ensuring that the following directory structure exists, and contains the files described below:
+Azure will not dynamically install the msnodesql module at runtime, so you must ensure that your application deployment includes a binary version of the module. You can verify that your deployment does contain a binary version of the module by ensuring that the following directory structure exists, and contains the files described below:
 
 	application directory
 		node_modules
-			node-sqlserver
+			msnodesql
 				lib
 
-The **node-sqlserver** directory should contain a **package.json** file. The **lib** directory should contain a **sql.js** and a **sqlserver.node** file, which is the compiled form of the node-sqlserver module.
+The **msnodesql** directory should contain a **package.json** file. The **lib** directory should contain a **sql.js** and a **sqlserver.node** file, which is the compiled form of the msnodesql module.
 
 For more information on deploying a Node.js application to Azure, see [Create and deploy a Node.js application to an Azure Web Site] and [Node.js Cloud Service].
 
